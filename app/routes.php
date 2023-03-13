@@ -1,5 +1,4 @@
 <?php
     // Додаємо маршрути 
-    $router->get('/home', 'HomeController@index');
-    
- 
+    // Контролер "products"
+    $router->get('/', 'ProductController@index');

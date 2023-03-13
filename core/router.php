@@ -4,7 +4,7 @@
     $router = new Router();
 
     // Встановлюємо базовий шлях
-    $router->setBasePath('/costing');
+    $router->setBasePath('/costing-products');
 
     // Додаємо маршрути 
   //  $router->get('/home', 'HomeController@index');

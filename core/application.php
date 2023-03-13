@@ -12,13 +12,15 @@ class Application {
 
         //Підключення файлу автозагрузки бібліотек
         require_once ROOT_DIR . '/vendor/autoload.php';  
-
+        require_once PATH_CORE . '/view.php'; 
         //Підключення файлу автозагрузки класів
         require_once PATH_CORE . '/autoload.php';
         spl_autoload_register(['ClassLoader', 'autoload'], true, false);
         
         //Підключення файлу для маршрутизаціїї запитів
         require_once PATH_CORE . '/router.php'; 
+ 
+        
         
     }
     
