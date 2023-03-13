@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phroute/phroute": "^2.2",
+        "bramus/router": "^1.6"
+    }
+}
