@@ -1,3 +1,5 @@
+<?php 
+$content = '
 <h3>Дерев`яна дошка овал з виїмкою 15х18 см</h3>
 <div class="col-3">
     <button type="button" class="btn btn-primary mt-3 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -86,4 +88,5 @@
             <td></td>
         </tr>
     </tbody>
-</table>
+</table>';
+include PATH_VIEWS ."layouts/main.php";

@@ -46,7 +46,7 @@ $content = '
     <tbody>
         <tr>
             <th scope="row">1</th>
-            <td>mz323054</td>
+            <td><a href="'.URL_APP.'/products/1">mz323054</a></td>
             <td>Дерев`яна дошка кругла з виїмками під ковпак Hood 25х2, 5 см</td>
         </tr>
         <tr>

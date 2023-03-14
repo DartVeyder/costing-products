@@ -1,4 +1,7 @@
-<h3>Ресурси</h3>
+<?php 
+
+$content = '
+<h3>Статті витрат</h3>
 <!-- Button trigger modal -->
 <div class="col-3">
     <button type="button" class="btn btn-primary mt-3 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -80,4 +83,5 @@
             </td>
         </tr>
     </tbody>
-</table>
+</table>';
+include PATH_VIEWS ."layouts/main.php";
