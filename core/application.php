@@ -8,14 +8,16 @@ class Application {
     
     public function Loader(){
         //Підключення файлу конфігурацій
-        require_once('config/config.php'); 
+        require_once('config/app.php'); 
 
         //Підключення файлу автозагрузки бібліотек
         require_once ROOT_DIR . '/vendor/autoload.php';  
+         //Підключення файлу автозагрузки класів
+         require_once PATH_CORE . '/autoload.php';
+         spl_autoload_register(['ClassLoader', 'autoload'], true, false);
         require_once PATH_CORE . '/view.php'; 
-        //Підключення файлу автозагрузки класів
-        require_once PATH_CORE . '/autoload.php';
-        spl_autoload_register(['ClassLoader', 'autoload'], true, false);
+        require_once PATH_CORE . '/helper.php'; 
+       
         
         //Підключення файлу для маршрутизаціїї запитів
         require_once PATH_CORE . '/router.php'; 

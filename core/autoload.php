@@ -2,8 +2,9 @@
 class ClassLoader
 {
     public static $dir = [ 
-        'controllers',
-        'models',
+        '/app/controllers',
+        '/app/models',
+        'extensions'
     ];
 
     public static function autoload($className)
@@ -21,7 +22,7 @@ class ClassLoader
 
         foreach (self::$dir as $d) {
 
-            $filename = mb_strtolower(ROOT_DIR . '/app/' . $d . '/' . $className . ".php");
+            $filename = mb_strtolower(ROOT_DIR .  $d . '/' . $className . ".php");
 
             if (is_readable($filename)) {
                 require_once $filename;

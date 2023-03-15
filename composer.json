@@ -1,6 +1,6 @@
 {
     "require": {
-        "phroute/phroute": "^2.2",
-        "bramus/router": "^1.6"
+        "bramus/router": "^1.6",
+        "twig/twig": "^3.5"
     }
 }
