@@ -18,5 +18,21 @@ use Josantonius\Database\Database;
             ->where(["id = $id"])
             ->execute('obj');
     }
+
+    public static function create($data){
+        return DatabaseConnection::getInstance()
+            ->insert($data)
+            ->in( self::$table)
+            ->execute();
+    }
+
+    public static function delete($clauses){
+        
+        return DatabaseConnection::getInstance()
+        ->delete()
+        ->from(self::$table)
+        ->where($clauses)
+        ->execute();
+    }
 }
 ?>

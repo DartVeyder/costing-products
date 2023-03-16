@@ -13,4 +13,7 @@
     $router->run();
     // Створюємо клас HomeController
   
+    function redirect($url){
+      header('Location: '.URL_APP. $url);
+    }
 ?>

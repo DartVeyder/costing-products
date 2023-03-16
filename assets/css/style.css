@@ -18,4 +18,11 @@ main {
 .resource-btn{
     font-size: 20px;
     margin: 0 3px;
+    border: none;
+    background: none;
+}
+
+.fa{
+    border: none;
+    background: none;
 }
