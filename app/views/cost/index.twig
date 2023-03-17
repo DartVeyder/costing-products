@@ -15,30 +15,36 @@
                 <h5 class="modal-title" id="exampleModalLabel">Додати нову статтю витрат</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form action="{{path('/costs/')}}" method="POST"  enctype="multipart/form-data">
             <div class="modal-body">
-                <form>
+                
                     <div class="mb-3">
                         <label for="name" class="form-label">Назва</label>
-                        <input type="text" class="form-control" id="name" required>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="unit" class="form-label">Одиниця виміру</label>
-                        <select class="form-select" aria-label="Default select example" name="unit" id="unit">
-                            <option value="1">кб. м.</option>
-                            <option value="2">шт</option>
-                            <option value="3">кг</option>
+                        <label for="category" class="form-label">Категорія</label>
+                        <select class="form-select" aria-label="select category" name="cost_category_id" id="category">
+                            {% for category in costs.categories %}
+                                <option value="{{category.id}}">{{category.name}}</option> 
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Ціна за одиницю</label>
-                        <input type="text" class="form-control" id="name" required>
+                        <label for="unit" class="form-label">Одиниця виміру</label>
+                        <select class="form-select" aria-label="select units" name="cost_unit_id" id="unit">
+                            {% for unit in costs.units %}
+                                <option value="{{unit.id}}">{{unit.name}}</option> 
+                            {% endfor %}
+                        </select>
                     </div>
-                </form>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                <button type="button" class="btn btn-primary">Додати</button>
+                <button type="submit" class="btn btn-primary">Додати</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -47,40 +53,27 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Назва</th>
-            <th scope="col">Одиниця виміру</th>
-            <th scope="col">Ціна за одиницю</th>
+            <th scope="col">Одиниця виміру</th> 
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
+        {% for cost in costs.items %}
         <tr>
-            <th scope="row">1</th>
-            <td>Дерево</td>
-            <td>кб. м.</td>
-            <td>1000 грн</td>
-            <td>
+            <th scope="row">{{cost.id}}</th>
+            <td>{{cost.name}}</td>
+            <td>{{cost.cost_unit_name}}</td>
+            <td class="control">
                 <span class="resource-edit resource-btn">
                     <i role="button" class="fa fa-pencil " aria-hidden="true"></i>
                 </span>
-                <span class="resource-destroy  resource-btn">
-                    <i role="button" class="fa fa-trash-o text-danger " aria-hidden="true"></i>
-                </span>
+                <form class="product-delete  resource-btn" action="{{path('/costs/', cost.id)}}" method="POST">
+                        <input  type="hidden" name="_delete" value="1">
+                        <button role="button" type="submit" class="fa fa-trash-o text-danger " aria-hidden="true"></button>
+                </form>
             </td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Клей</td>
-            <td>шт.</td>
-            <td>100 грн</td>
-            <td>
-                <span class="resource-edit resource-btn">
-                    <i role="button" class="fa fa-pencil " aria-hidden="true"></i>
-                </span>
-                <span class="resource-destroy  resource-btn">
-                    <i role="button" class="fa fa-trash-o text-danger " aria-hidden="true"></i>
-                </span>
-            </td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}

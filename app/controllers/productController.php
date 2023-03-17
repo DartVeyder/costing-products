@@ -20,8 +20,7 @@ class ProductController
   }
 
   public function delete($id){ 
-   ProductModel::delete(["id = $id"]);
-  
+    ProductModel::delete(["id = $id"]);
     redirect('/products');
   }
 }

@@ -3,9 +3,10 @@ class ProductModel extends Model
 { 
     public static $table =  'products';
    
-    public static function product(){
+    public static function index(){
         Model::$table = self::$table;
     }
+ 
 }
 
-ProductModel::product();
+ProductModel::index();

@@ -26,3 +26,7 @@ main {
     border: none;
     background: none;
 }
+
+.control{
+    display: flex;
+}
