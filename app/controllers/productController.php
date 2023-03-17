@@ -10,8 +10,17 @@ class ProductController
 
   public function show($id)
   {
-    $product = ProductModel::find($id)[0];
-    View::render('product.show', compact('product'));
+
+    $data['product'] = ProductModel::find($id);
+    $data['product_costs'] = ProductCostModel::allJoin(
+      ['id', 'unit_cost', 'quantity', 'total_cost'], 
+      ['product_id' => $id], 
+      [
+        ['table' => 'costs',  'on' => ['with' => 'cost_id', 'on' => 'id']],
+      ],
+      ['costs.name' => 'cost_name' ]
+    ); 
+    View::render('product.show', $data);
   }
 
   public function store(){ 

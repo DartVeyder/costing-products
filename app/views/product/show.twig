@@ -42,7 +42,6 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Назва</th>
-            <th scope="col">Одиниця виміру</th>
             <th scope="col">Кількість</th>
             <th scope="col">Ціна</th>
             <th scope="col">Сума</th>
@@ -50,13 +49,13 @@
         </tr>
     </thead>
     <tbody>
+        {% for item in product_costs %}
         <tr>
-            <th scope="row">1</th>
-            <td>Дерево</td>
-            <td>кб. м.</td>
-            <td>5</td>
-            <td>1000 грн</td>
-            <td>5000 грн</td>
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.cost_name}}</td> 
+            <td>{{item.quantity}}</td>
+            <td>{{item.unit_cost}}</td>
+            <td>{{item.total_cost}}</td>
             <td>
                 <span class="resource-edit resource-btn">
                     <i role="button" class="fa fa-pencil " aria-hidden="true"></i>
@@ -66,22 +65,7 @@
                 </span>
             </td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Клей</td>
-            <td>шт.</td>
-            <td>3</td>
-            <td>100 грн</td>
-            <td>300 грн</td>
-            <td>
-                <span class="resource-edit resource-btn">
-                    <i role="button" class="fa fa-pencil " aria-hidden="true"></i>
-                </span>
-                <span class="resource-destroy  resource-btn">
-                    <i role="button" class="fa fa-trash-o text-danger " aria-hidden="true"></i>
-                </span>
-            </td>
-        </tr> 
+        {% endfor %}
         <tr>
             <td colspan="5" class="text-end"><b>Загальна сума</b></td>
             <td>10000</td>

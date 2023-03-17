@@ -15,12 +15,17 @@ class Model
         $query[] = self::join($joins); 
         $where = self::where($where);
         $query[] = $where['query'];  
-        return DatabaseConnection::getInstance()
+        $result  =  DatabaseConnection::getInstance()
             ->query(
                 implode(" ", $query),
                 $where['statements'],
                 'obj' // array_assoc, obj, array_num
             ); 
+            $n = 1;
+            foreach ($result as $key => $value) { 
+                $result[$key]->id = $n++; 
+            }
+            return $result;
     }
 
     public static function findJoin($select = [], $where = [], $joins = [], $as = [])
