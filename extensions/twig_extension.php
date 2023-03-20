@@ -34,11 +34,15 @@ class Twig_extension{
 
     public function path(){
         
-        $this->twig->addFunction(new TwigFunction('path', function ($path, $router = '') {
+        $this->twig->addFunction(new TwigFunction('path', function ($path, $router = '', $atr = false) {
             // або використовуйте ваш власний шлях до каталогу з ресурсами
             $publicPath = URL_APP; 
-            // шлях до ресурсу
-            $path = $publicPath .$path. $router;
+            if($atr){
+                $path = DIR_ACTIVE . '/'.$router;
+            }else{
+                $path = $publicPath . $path. $router;
+            }
+            
             return $path;
         }));
     }

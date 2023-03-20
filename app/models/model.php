@@ -4,8 +4,7 @@ use Josantonius\Database\Database;
 
 class Model
 {
-    public static $table;
-    private static $query;
+    public static $table; 
    
 
     public static function allJoin($select = [], $where = [], $joins = [], $as = [])
@@ -15,17 +14,23 @@ class Model
         $query[] = self::join($joins); 
         $where = self::where($where);
         $query[] = $where['query'];  
+       
         $result  =  DatabaseConnection::getInstance()
             ->query(
                 implode(" ", $query),
                 $where['statements'],
-                'obj' // array_assoc, obj, array_num
-            ); 
-            $n = 1;
-            foreach ($result as $key => $value) { 
-                $result[$key]->id = $n++; 
-            }
-            return $result;
+                'array_assoc' // array_assoc, obj, array_num
+            );  
+            return self::num($result);
+    }
+
+    private static function num($array){
+        $n = 1;
+        foreach ($array as $key => $value) { 
+            $array[$key]['num'] = $n++; 
+        }
+
+        return $array;
     }
 
     public static function findJoin($select = [], $where = [], $joins = [], $as = [])
@@ -39,7 +44,7 @@ class Model
             ->query(
                 implode(" ", $query),
                 $where['statements'],
-                'obj' // array_assoc, obj, array_num
+                'array_assoc' // array_assoc, obj, array_num
             )[0]; 
     }
 
@@ -89,18 +94,28 @@ class Model
         return 'SELECT ' . implode(', ', $array);
     }
 
-    public static function all()
+    public static function all($clauses = [])
     {
-        return DatabaseConnection::getInstance()
+        if($clauses){
+            $result =  DatabaseConnection::getInstance()
             ->select()
             ->from(self::$table)
+            ->where($clauses)
             ->execute('array_assoc');
+        }else{
+            $result =  DatabaseConnection::getInstance()
+            ->select()
+            ->from(self::$table) 
+            ->execute('array_assoc');
+        }
+        
+            return self::num($result); 
     }
 
-    public static function find($clauses)
+    public static function find($clauses, $columns = '*')
     {
         return DatabaseConnection::getInstance()
-            ->select()
+            ->select($columns)
             ->from(self::$table)
             ->where($clauses)
             ->execute('array_assoc')[0];
@@ -122,5 +137,13 @@ class Model
             ->from(self::$table)
             ->where($clauses)
             ->execute();
+    }
+
+    public static function softDelete($clauses){
+        return DatabaseConnection::getInstance()
+        ->update(['delete_at' => date('Y-m-d H:i:s')])
+        ->in(self::$table)
+        ->where($clauses)
+        ->execute();
     }
 }

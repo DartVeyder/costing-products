@@ -48,8 +48,8 @@
     <tbody> 
         {% for product in products %}
             <tr>
-                <td>{{product.id}}</td>
-                <td> <a href="{{path('/products/', product.id)}}">{{product.sku}}</a></td>
+                <th>{{product.num}}</th>
+                <td> <a href="{{path('/products/', product.id) }}{{'/costs/'}}">{{product.sku}}</a></td>
                 <td>{{product.name}}</td>
                 <td class="control">
                     <span class="product-edit resource-btn">

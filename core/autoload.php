@@ -4,7 +4,7 @@ class ClassLoader
     public static $dir = [ 
         '/app/controllers',
         '/app/models',
-        'extensions'
+        'extensions',
     ];
 
     public static function autoload($className)

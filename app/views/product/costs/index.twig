@@ -14,25 +14,27 @@
                 <h5 class="modal-title" id="exampleModalLabel">Додати номенклатуру</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form> 
+            <form action="{{path('/products/', product.id) }}{{'/costs'}}" method="POST"  enctype="multipart/form-data"> 
+            <div class="modal-body"> 
                     <div class="mb-3">
-                        <label for="unit" class="form-label">Ресурс</label>
-                        <select class="form-select" aria-label="Default select example" name="unit" id="unit">
-                            <option value="1">Дерево</option>
-                            <option value="2">Клей</option> 
+                        <label for="unit" class="form-label">Додати статтю витрати</label>
+                        <select class="form-select" aria-label="select cost" name="cost_id" id="cost_id">
+                        {% for cost in costs %}
+                            <option value="{{cost.id}}">{{cost.name }} ({{cost.unit_name }})</option>  
+                        {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="quantity" class="form-label">Кількість</label>
-                        <input type="text" class="form-control" id="quantity">
-                    </div>
-                </form>
+                        <label for="quantity"  class="form-label">Кількість</label>
+                        <input type="number" pattern='[0-9]+(\.[0-9][0-9]?)?'  step="0.01" class="form-control" name="quantity" id="quantity" required>
+                    </div> 
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                <button type="button" class="btn btn-primary">Додати</button>
+                <button type="submit" class="btn btn-primary">Додати</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -49,27 +51,27 @@
         </tr>
     </thead>
     <tbody>
-        {% for item in product_costs %}
+        {% for cost in product_costs %}
         <tr>
-            <th scope="row">{{item.id}}</th>
-            <td>{{item.cost_name}}</td> 
-            <td>{{item.quantity}}</td>
-            <td>{{item.unit_cost}}</td>
-            <td>{{item.total_cost}}</td>
-            <td>
+            <th scope="row">{{cost.num}}</th>
+            <td>{{cost.name}}</td> 
+            <td>{{cost.quantity}}</td>
+            <td>{{cost.unit_cost}}</td>
+            <td>{{cost.total_cost}}</td>
+            <td class="control">
                 <span class="resource-edit resource-btn">
                     <i role="button" class="fa fa-pencil " aria-hidden="true"></i>
                 </span>
-                <span class="resource-destroy  resource-btn">
-                    <i role="button" class="fa fa-trash-o text-danger " aria-hidden="true"></i>
-                </span>
+                <form class="product-delete  resource-btn" action="{{path('/costs/', cost.id, true)}}" method="POST">
+                        <input  type="hidden" name="_delete" value="1">
+                        <button role="button" type="submit" class="fa fa-trash-o text-danger " aria-hidden="true"></button>
+                </form>
             </td>
         </tr>
         {% endfor %}
         <tr>
-            <td colspan="5" class="text-end"><b>Загальна сума</b></td>
-            <td>10000</td>
-            <td></td>
+            <th colspan="4" class="text-end"><b>Загальна сума</b></th>
+            <th  colspan="2">{{total_costs}}</th> 
         </tr>
     </tbody>
 </table>
