@@ -1,18 +1,19 @@
 
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh">
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="{{ path('/products') }}" class="nav-link " aria-current="page">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-          Продукція
-        </a>
-      </li>
-      <li>
-        <a href="{{  path('/costs') }}/" class="nav-link ">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-          Статті витрат
-        </a>
-      </li> 
-    </ul>
+    <nav id="navbar-example3" class="navbar navbar-dark bg-dark flex-column align-items-stretch p-3">
+      <nav class="nav nav-pills flex-column">
+        <a class="nav-link" href="{{ path('/products') }}">Вироби</a>
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link ms-3 my-1" href="{{ path('/products/types') }}">Типи</a>
+          <a class="nav-link ms-3 my-1" href="{{ path('/products/attributes') }}">Атрибути</a>
+        </nav> 
+      </nav>
+      <nav class="nav nav-pills flex-column">
+        <a class="nav-link" href="{{  path('/costs') }}">Статті витрат</a>
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link ms-3 my-1" href="#item-1-1">Категорії</a> 
+        </nav> 
+      </nav>
+    </nav>
     <hr> 
   </div>

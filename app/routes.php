@@ -12,6 +12,18 @@
             $router->post('/costs', 'ProductCostController@store'); 
             $router->delete('/costs/(\d+)', 'ProductCostController@delete');
         });
+
+        $router->mount('/types', function () use ($router) {
+            $router->get('/', 'ProductTypeController@index');
+            $router->post('/', 'ProductTypeController@store'); 
+            $router->delete('/(\d+)', 'ProductTypeController@delete'); 
+        });
+
+        $router->mount('/attributes', function () use ($router) {
+            $router->get('/', 'ProductAttributeController@index'); 
+            $router->post('/', 'ProductAttributeController@store'); 
+            $router->delete('/(\d+)', 'ProductAttributeController@delete');
+        });
     });
     
     $router->mount('/costs', function () use ($router) {
@@ -19,6 +31,8 @@
         $router->post('/', 'CostController@store');
         $router->delete('/(\d+)', 'CostController@delete');
     });
+
+    
  
 
 
