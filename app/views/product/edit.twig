@@ -1,0 +1,36 @@
+{% extends "layouts/main.twig" %}
+{% block content %}
+<h3>Редагувати "{{product.name}}"</h3>
+<div class="mb-3">
+    <label for="type" class="form-label">Тип</label>
+    <input type="text"   name="name" class="form-control" id="type" value="{{type.name}} "  disabled> 
+</div> 
+
+<form action="{{path('/products/', product.id, false)}}" method="POST"  enctype="multipart/form-data" >
+<input  type="hidden" name="PATCH" value="1">
+<div class="mb-3">
+  <label for="raw" class="form-label">Сировина</label>
+  <select class="form-select" aria-label="Default select example" id="raw" name="cost_id"> 
+    {% for cost in costs %}
+      <option value="{{cost.id}}">{{cost.name}} </option> 
+    {% endfor %}
+  </select>
+</div>
+{% for attribute in product_attibutes %}
+  <label  class="form-label">{{attribute.name}}</label>
+  <div class="mb-3 input-group">   
+      <input value="{{attribute.name}} {{attribute.value}} {{attribute.unit}}" name = "description[]" hidden>
+  {% if attribute.attribute_id == 8 %}
+      <input type="number" class="form-control" value="{{attribute.value}}"  aria-label="{{attribute.name}}"   name="product_attributes[{{attribute.attribute_id}}]" max="100" min="0">
+  {% else %} 
+      <input type="number" class="form-control" aria-label="{{attribute.name}}"  
+    pattern='[0-9]+(\.[0-9][0-9]?)?' min= "0" step="0.01" value="{{attribute.value}}"   name="product_attributes[{{attribute.attribute_id}}]" required>
+  {% endif %} 
+    <span class="input-group-text">{{attribute.unit}}</span>
+  </div>
+{% endfor %}  
+<div class="mb-3">
+  <button type="submit" class="btn btn-primary">Зберегти</button>
+</div>
+</div>
+{% endblock %}

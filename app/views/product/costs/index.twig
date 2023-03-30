@@ -20,7 +20,7 @@
                         <label for="unit" class="form-label">Додати статтю витрати</label>
                         <select class="form-select" aria-label="select cost" name="cost_id" id="cost_id">
                         {% for cost in costs %}
-                            <option value="{{cost.id}}">{{cost.name }} ({{cost.unit_name }})</option>  
+                            <option value="{{cost.id}}|{{cost.unit_name }}">{{cost.name }} ({{cost.unit_name }})</option>  
                         {% endfor %}
                         </select>
                     </div>
@@ -66,6 +66,13 @@
                         <input  type="hidden" name="_delete" value="1">
                         <button role="button" type="submit" class="fa fa-trash-o text-danger " aria-hidden="true"></button>
                 </form>
+                <span class="resource-info resource-btn">
+                    <button class="fa fa-question-circle-o info-popover" 
+                    data-bs-html="true" aria-hidden="true" 
+                    role="button" data-bs-toggle="popover"  
+                    tabindex="0"  data-bs-trigger="focus"  
+                    data-bs-content="{{cost.description}}"></button>
+                </span>
             </td>
         </tr>
         {% endfor %}

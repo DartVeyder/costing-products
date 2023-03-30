@@ -6,7 +6,7 @@ class ProductCostController
   { 
     $data['product'] = ProductModel::find(["id = $product_id"]);
     $product_costs = ProductCostModel::allJoin(
-      ['id', 'quantity', 'total_cost', 'cost_id'], 
+      ['id', 'quantity', 'total_cost', 'cost_id', 'description'], 
       ['product_id' => $product_id], 
       [
         ['table' => 'costs',  'on' => ['with' => 'cost_id', 'on' => 'id']],
@@ -21,9 +21,9 @@ class ProductCostController
       [], 
       [
         ['table' => 'cost_categories',  'on' => ['with' => 'cost_category_id', 'on' => 'id']],
-        ['table' => 'cost_units', 'on' => ['with' => 'cost_unit_id', 'on' => 'id']] 
+        ['table' => 'units', 'on' => ['with' => 'unit_id', 'on' => 'id']] 
       ],
-      ['cost_categories.name' => 'cost_categories_name','cost_units.name' => 'unit_name']);
+      ['cost_categories.name' => 'cost_categories_name','units.name' => 'unit_name']);
      //Helper::dd($data);
     View::render('product.costs.index', $data);
   }
@@ -31,10 +31,14 @@ class ProductCostController
   public function store($product_id){
   
     $data = $_POST;
+    $data_cost = explode("|" , $data["cost_id"]);
+    $data["cost_id"] = $data_cost[0];
+    
     $data['product_id'] = $product_id;
     $cost =  CostModel::find("id =  $data[cost_id]" , 'name, unit_cost');
     $data['total_cost'] = $cost['unit_cost']  * $data['quantity'];
-
+    $data["quantity"] = $data["quantity"] . ' ' . $data_cost[1];
+   
     ProductCostModel::create($data);
       
     redirect("/products/$product_id/costs");

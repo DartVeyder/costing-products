@@ -26,7 +26,8 @@ class Model
 
     private static function num($array){
         $n = 1;
-        foreach ($array as $key => $value) { 
+         
+        foreach ($array as $key => $value) {  
             $array[$key]['num'] = $n++; 
         }
 
@@ -122,11 +123,30 @@ class Model
     }
 
     public static function create($data)
-    {
-        return DatabaseConnection::getInstance()
+    { 
+            return DatabaseConnection::getInstance()
             ->insert($data)
             ->in(self::$table)
             ->execute();
+       
+        
+    }
+
+    public static function replace($data)
+    {
+        try {
+            return DatabaseConnection::getInstance()
+            ->replace($data)
+            ->from(self::$table)
+            ->execute();
+        } catch (\Throwable $th) {
+            return DatabaseConnection::getInstance()
+            ->insert($data)
+            ->in(self::$table)
+            ->execute();
+       
+        }
+       
     }
 
     public static function delete($clauses)

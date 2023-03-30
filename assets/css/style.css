@@ -30,3 +30,7 @@ main {
 .control{
     display: flex;
 }
+
+.info-popover{
+    white-space: pre-wrap !important;
+}

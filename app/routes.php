@@ -5,6 +5,8 @@
         $router->get('/', 'ProductController@index');
         //$router->get('/(\d+)/', 'ProductController@show');
         $router->post('/', 'ProductController@store');
+        $router->get('/(\d+)/edit', 'ProductController@edit');
+        $router->patch('/(\d+)', 'ProductController@update');
         $router->delete('/(\d+)', 'ProductController@delete');
 
         $router->mount('/(\d+)', function () use ($router) {

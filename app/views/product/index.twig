@@ -53,7 +53,7 @@
                 <td>{{product.name}}</td>
                 <td class="control">
                     <span class="product-edit resource-btn">
-                        <i role="button" class="fa fa-pencil " aria-hidden="true"></i>
+                        <a href="{{path('/products/', product.id)}}{{'/edit'}}"><i role="button" class="fa fa-pencil " aria-hidden="true"></i></a>
                     </span>
                     <form class="product-delete  resource-btn" action="{{path('/products/', product.id)}}" method="POST">
                         <input  type="hidden" name="_delete" value="1">

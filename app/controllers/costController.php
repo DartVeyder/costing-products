@@ -10,11 +10,11 @@ class CostController
       [], 
       [
         ['table' => 'cost_categories',  'on' => ['with' => 'cost_category_id', 'on' => 'id']],
-        ['table' => 'cost_units', 'on' => ['with' => 'cost_unit_id', 'on' => 'id']] 
+        ['table' => 'units', 'on' => ['with' => 'unit_id', 'on' => 'id']] 
       ],
-      ['cost_categories.name' => 'cost_categories_name','cost_units.name' => 'unit_name']);
+      ['cost_categories.name' => 'cost_categories_name','units.name' => 'unit_name']);
     $data['categories'] = CostCategoryModel::all();
-    $data['units'] = CostUnitsModel::all(); 
+    $data['units'] = UnitsModel::all(); 
    
     View::render('cost.index', $data); 
   }
