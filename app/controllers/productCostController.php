@@ -46,7 +46,7 @@ class ProductCostController
 
   public function delete($product_id, $product_cost_id){ 
     ProductCostModel::delete(["id = $product_cost_id"]);
-    redirect("/products/$product_id/costs");
+    redirect("/products/$product_id/costs/");
   }
  
 }
