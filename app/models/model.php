@@ -134,18 +134,10 @@ class Model
 
     public static function replace($data)
     {
-        try {
-            return DatabaseConnection::getInstance()
-            ->replace($data)
-            ->from(self::$table)
-            ->execute();
-        } catch (\Throwable $th) {
-            return DatabaseConnection::getInstance()
-            ->insert($data)
-            ->in(self::$table)
-            ->execute();
-       
-        }
+        return DatabaseConnection::getInstance()
+        ->replace($data)
+        ->from(self::$table)
+        ->execute();
        
     }
 

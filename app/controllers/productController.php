@@ -5,7 +5,12 @@ class ProductController
   public function index()
   {
     $products = ProductModel::all(['delete_at  IS NULL']);
-    View::render('product.index', compact('products'));
+    $product_types = ProductTypeModel::all();
+    $data = [
+      'products' => $products,
+      'product_types' => $product_types
+    ]; 
+    View::render('product.index', $data);
   }
 
   /*public function show($id)
@@ -34,6 +39,7 @@ class ProductController
     $product_type = ProductTypeModel::find(["id = $product[product_type_id]"]); 
     $product_attribute = ProductAttributeModel::all(["product_id = $product_id"]);
     
+    
     $units = UnitsModel::all(); 
     $attribute_types = AttributeTypeModel::allJoin(
     ['*'], 
@@ -49,8 +55,10 @@ class ProductController
   
      foreach ($attribute_types as $key => $item) {
        $attribute_types[$key]["value"] = $product_attribute[$item['attribute_id']]['value'];
+       $attribute_types[$key]["product_attribute_id"] = $product_attribute[$item['attribute_id']]['id'];
        $attribute_types[$key]["unit"] =  $units[$item['unit_id'] - 1]['name'];
     } 
+    //Helper::dd($attribute_types );
     $data['product'] = $product ;
     $data['type'] = $product_type;
     $data['product_attibutes'] = $attribute_types;  
@@ -71,31 +79,36 @@ class ProductController
     $cost = CostModel::find("id = $_POST[cost_id]" , ['unit_cost']);
     $product_attributes = $_POST['product_attributes'];
     $post_desc = $_POST['description'];
+    $jsonData = $_POST['jsonData'] ;
+    function decodeJson($element) 
+    {  
+      return json_decode($element, true); 
+    }
     
+    $product_attributes =  array_replace_recursive(array_map('decodeJson', $jsonData), $product_attributes) ;
+    foreach ($product_attributes as $item) {
+      ProductAttributeModel::replace($item);
+    }
+    $product_attributes = array_column($product_attributes, 'value', 'attribute_id');
+   
     $waste =  $product_attributes[8]; // відсоток відходів
     $quantity = Calculate::volume($product_attributes[1], $product_attributes[2], $product_attributes[9] , 3 , 1);
     $cost_price_raw =  Calculate::cost_price_raw($cost['unit_cost'], $quantity,  $waste );
     $description =  $post_desc;
     $description[] =  "Ціна за штуку = " .$cost_price_raw['formula'] . " = " .  round($cost_price_raw['result'], 2)  ;
+
+    $product_cost =  ProductCostModel::find("product_id = $product_id AND cost_id =  $_POST[cost_id]" , ['id']);
     $product_costs = [
+      "id" => $product_cost['id'],
       "cost_id" => $_POST['cost_id'],
       "product_id" => $product_id,
       'quantity' =>  $quantity,
       'total_cost' =>  $cost_price_raw['result'],
       'description' => implode("</br>" , $description)
     ] ; 
-   // Helper::dd($product_costs);
  
-    foreach ($product_attributes as $key => $attribute) {
-      $data = [ 
-        "attribute_id" =>  $key,
-        "value" => $attribute,
-        "product_id" => $product_id,
-      ]; 
-      
-      ProductAttributeModel::replace($data);
-    }  
     ProductCostModel::replace($product_costs);
+
     redirect("/products/{$product_id}/edit" );
   }
 

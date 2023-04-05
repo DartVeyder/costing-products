@@ -26,6 +26,14 @@
                         <label for="name" class="form-label">Назва</label>
                         <input type="text"   name="name" class="form-control" id="name" required> 
                     </div> 
+                    <div class="mb-3">
+                        <label for="product-type-id" class="form-label">Тип</label>
+                        <select class="form-select" aria-label="select units" name="product_type_id" id="product-type-id">
+                            {% for product_type in product_types %}
+                                <option value="{{product_type.id}}">{{product_type.name}} </option> 
+                            {% endfor %}
+                        </select>
+                    </div>
                 
             </div>
             <div class="modal-footer">
