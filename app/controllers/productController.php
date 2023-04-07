@@ -30,7 +30,33 @@ class ProductController
   }*/
 
   public function store(){ 
-    ProductModel::create($_POST);
+    $data = $_POST;
+    $attribute_types = AttributeTypeModel::allJoin(
+      ['*'], 
+      ['product_type_id' =>  $data["product_type_id"]], 
+      [
+        ['table' => 'attributes',  'on' => ['with' => 'attribute_id', 'on' => 'id']],
+      ],
+      ['attributes.name' => 'name','attributes.unit_id' => 'unit_id']
+    );   
+    $product_id = ProductModel::create($_POST , 'id');
+
+    foreach ($attribute_types as $item) {
+      if($item['value']){
+        $array = [
+          'product_id' => $product_id,
+          'attribute_id' => $item['attribute_id'],
+          'value' => $item['value']
+        ];
+
+        ProductAttributeModel::create($array);
+      }
+      //ProductAttributeModel::replace($item);
+
+    } 
+
+   
+      
     redirect('/products');
   }
 

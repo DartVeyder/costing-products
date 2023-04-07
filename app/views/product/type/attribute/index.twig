@@ -1,0 +1,54 @@
+{% extends "layouts/main.twig" %}
+{% block content %}
+<h3>Редагувати Пиломатеріали</h3> 
+<div class="col-3  mb-4">
+    <button type="button" class="btn btn-primary mt-3 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Додати
+    </button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Додати новий тип виробу</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{path('/products/types/')}}" method="POST"  enctype="multipart/form-data">
+            <div class="modal-body">
+                <label for="raw" class="form-label">Добавити атрибут</label>
+                <select class="form-select" aria-label="Default select example" id="raw" name="cost_id"> 
+                    {% for attribute in attributes %}
+                    <option value="{{attribute.id}}">{{attribute.name}} </option> 
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                <button type="submit" class="btn btn-primary">Додати</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <form action="{{path('/products/', product.id, true)}}" method="POST"  enctype="multipart/form-data" >
+<input  type="hidden" name="PATCH" value="1">
+         {% for item in attribute_types %}
+      <div class="row mb-3 "> 
+        <div class="col-2 m-10">
+            <div class="input-group">
+                <span class="input-group-text">{{item.name}}</span>
+                <input type="text" aria-label="First name" class="form-control" name="{{item.id}}" value="{{item.value}}"> 
+                <span class="input-group-text">{{item.unit_name}}</span>
+            </div>
+        </div>
+      </div>
+      {% endfor %}
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+        </div>
+</form>  
+</div>
+    
+{% endblock %}

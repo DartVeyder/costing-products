@@ -17,8 +17,14 @@
 
         $router->mount('/types', function () use ($router) {
             $router->get('/', 'ProductTypeController@index');
+            $router->get('/(\d+)/edit', 'ProductTypeController@edit'); 
             $router->post('/', 'ProductTypeController@store'); 
             $router->delete('/(\d+)', 'ProductTypeController@delete'); 
+            
+            $router->mount('/(\d+)/attributes', function () use ($router) {
+                $router->get('/', 'ProductTypeAttributeController@index');
+                $router->patch('/', 'ProductTypeAttributeController@update');
+            });
         });
 
         $router->mount('/attributes', function () use ($router) {

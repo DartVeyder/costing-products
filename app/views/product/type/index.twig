@@ -47,7 +47,10 @@
             <td>{{product_type.name}}</td> 
             <td class="control">
                 <span class="resource-edit resource-btn">
-                    <i role="button" class="fa fa-pencil " aria-hidden="true"></i>
+                    <a href="{{path('/products/types/', product_type.id)}}{{'/edit'}}"><i role="button" class="fa fa-pencil " aria-hidden="true"></i></a>
+                </span>
+                <span class="resource-edit resource-btn">
+                    <a href="{{path('/products/types/', product_type.id)}}{{'/attributes'}}"><i class="fa fa-cog" aria-hidden="true"></i></a>
                 </span>
                 <form class="product-delete  resource-btn" action="{{path('/types', product_type.id, true)}}" method="POST">
                         <input  type="hidden" name="_delete" value="1">

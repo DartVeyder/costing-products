@@ -122,12 +122,12 @@ class Model
             ->execute('array_assoc')[0];
     }
 
-    public static function create($data)
+    public static function create($data, $result = '')
     { 
             return DatabaseConnection::getInstance()
             ->insert($data)
             ->in(self::$table)
-            ->execute();
+            ->execute($result);
        
         
     }
@@ -137,6 +137,16 @@ class Model
         return DatabaseConnection::getInstance()
         ->replace($data)
         ->from(self::$table)
+        ->execute();
+       
+    }
+
+    public static function update($data, $clauses = [])
+    {
+        return DatabaseConnection::getInstance()
+        ->update($data)
+        ->in(self::$table)
+        ->where($clauses)
         ->execute();
        
     }
