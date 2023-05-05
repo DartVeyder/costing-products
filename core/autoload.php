@@ -4,6 +4,7 @@ class ClassLoader
     public static $dir = [ 
         '/app/controllers',
         '/app/models',
+        '/app/services',
         'extensions',
     ];
 

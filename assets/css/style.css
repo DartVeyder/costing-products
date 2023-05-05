@@ -34,3 +34,7 @@ main {
 .info-popover{
     white-space: pre-wrap !important;
 }
+
+.section-select-cost{
+    display: none;
+}

@@ -15,7 +15,7 @@ class ProductCostController
     ); 
     $data['product_costs'] = $product_costs;
     $data['total_costs'] = array_sum(array_column($product_costs, 'total_cost'));
-
+    $data['types'] = CostTypeModel::all();
     $data['costs'] = CostModel::allJoin(
       ['*'], 
       [], 
@@ -24,7 +24,7 @@ class ProductCostController
         ['table' => 'units', 'on' => ['with' => 'unit_id', 'on' => 'id']] 
       ],
       ['cost_categories.name' => 'cost_categories_name','units.name' => 'unit_name']);
-     //Helper::dd($data);
+   // Helper::dd($data);
     View::render('product.costs.index', $data);
   }
   
@@ -32,7 +32,8 @@ class ProductCostController
   
     $data = $_POST;
     $data_cost = explode("|" , $data["cost_id"]);
-    $data["cost_id"] = $data_cost[0];
+    $cost_id = $data_cost[0];
+    $data["cost_id"] = $cost_id;
     
     $data['product_id'] = $product_id;
     $cost =  CostModel::find("id =  $data[cost_id]" , 'name, unit_cost');
@@ -41,7 +42,11 @@ class ProductCostController
    
     ProductCostModel::create($data);
       
-    redirect("/products/$product_id/costs");
+    redirect("/products/$product_id/costs/$cost_id/edit");
+  }
+
+  public function edit($product_id, $product_cost_id){ 
+      echo $product_cost_id;
   }
 
   public function delete($product_id, $product_cost_id){ 

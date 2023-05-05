@@ -31,6 +31,14 @@
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label for="type" class="form-label">Тип</label>
+                        <select class="form-select" aria-label="select category" name="cost_type_id" id="type">
+                            {% for type in types %}
+                                <option value="{{type.id}}">{{type.name}}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="unit" class="form-label">Одиниця виміру</label>
                         <select class="form-select" aria-label="select units" name="unit_id" id="unit">
                             {% for unit in units %}
@@ -71,7 +79,7 @@
             <td>{{cost.unit_cost}}</td>
             <td class="control">
                 <span class="resource-edit resource-btn">
-                    <i role="button" class="fa fa-pencil " aria-hidden="true"></i>
+                    <a href="{{path('/costs/', cost.id)}}{{'/edit'}}"><i role="button" class="fa fa-pencil " aria-hidden="true"></i></a>
                 </span>
                 <form class="product-delete  resource-btn" action="{{path('/costs/', cost.id)}}" method="POST">
                         <input  type="hidden" name="_delete" value="1">

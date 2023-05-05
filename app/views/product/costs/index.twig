@@ -15,18 +15,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{path('/products/', product.id) }}{{'/costs'}}" method="POST"  enctype="multipart/form-data"> 
-            <div class="modal-body"> 
-                    <div class="mb-3">
+            <div class="modal-body">  
+                    <div class="mb-3 ">
+                        <label for="product-cost-type" class="form-label">Тип</label>
+                        <select class="form-select" aria-label="select cost"  id="product-cost-type" required >
+                            <option value="" ></option>  
+                            {% for type in types %}
+                                 <option value="{{type.id}}">{{type.name }}</option>  
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3 section-select-cost"  >
                         <label for="unit" class="form-label">Додати статтю витрати</label>
-                        <select class="form-select" aria-label="select cost" name="cost_id" id="cost_id">
+                        <select class="form-select" aria-label="select cost" name="cost_id" id="product-cost-id" required>
+                            <option value=""></option>  
                         {% for cost in costs %}
-                            <option value="{{cost.id}}|{{cost.unit_name }}">{{cost.name }} ({{cost.unit_name }})</option>  
+                            <option value="{{cost.id}}|{{cost.unit_name }}" data-cost-type-id="{{cost.cost_type_id}}">{{cost.name }} ({{cost.unit_name }})</option>  
                         {% endfor %}
                         </select>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 section-quantity">
                         <label for="quantity"  class="form-label">Кількість</label>
-                        <input type="number" pattern='[0-9]+(\.[0-9][0-9]?)?'  step="0.01" class="form-control" name="quantity" id="quantity" required>
+                        <input type="number" pattern='[0-9]+(\.[0-9][0-9]?)?'  step="0.01" class="form-control" name="quantity" id="quantity" >
                     </div> 
                 
             </div>
@@ -60,7 +70,7 @@
             <td>{{cost.total_cost}}</td>
             <td class="control">
                 <span class="resource-edit resource-btn">
-                    <!--<a href ="{{path('/products/', product.id)}}/edit"><i role="button" class="fa fa-pencil " aria-hidden="true"></i></a>-->
+                   <a href ="{{path('/products/', product.id)}}/costs/{{cost.id}}/edit"><i role="button" class="fa fa-pencil " aria-hidden="true"></i></a>
                 </span>
                 <form class="product-delete  resource-btn" action="{{path('/costs/', cost.id, true)}}" method="POST">
                         <input  type="hidden" name="_delete" value="1">

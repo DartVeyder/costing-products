@@ -38,7 +38,7 @@ class Twig_extension{
             // або використовуйте ваш власний шлях до каталогу з ресурсами
             $publicPath = URL_APP; 
             if($atr){
-                $path = DIR_ACTIVE  .$router;
+                $path = DIR_ACTIVE .'/' .$router;
             }else{
                 $path = $publicPath . $path. $router;
             }

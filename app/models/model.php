@@ -7,17 +7,20 @@ class Model
     public static $table; 
    
 
-    public static function allJoin($select = [], $where = [], $joins = [], $as = [])
-    {  
+    public static function allJoin($select = [], $where = [], $joins = [], $as = [] )
+    {   
         $query[] = self::colums($select, $as);
         $query[] = "FROM " . self::$table;
         $query[] = self::join($joins); 
+      //  $query[] = "LEFT JOIN units units ON attributes.unit_id = units.id";
         $where = self::where($where);
         $query[] = $where['query'];  
+       // Helper::dd($query);
+        $query = implode(" ", $query);
        
         $result  =  DatabaseConnection::getInstance()
             ->query(
-                implode(" ", $query),
+                $query,
                 $where['statements'],
                 'array_assoc' // array_assoc, obj, array_num
             );  
@@ -79,7 +82,8 @@ class Model
         foreach ($data as $key => $item) {
             $j = [];
             $j[] = $item['table'] . ' ' . $item['table'];
-            $j[] = "ON " . self::$table . "." . $item['on']['with'] . ' = ' .  $item['table'] . "." . $item['on']['on'];
+            $table = ($item['on']['table'])? $item['on']['table']:  self::$table;
+            $j[] = "ON " . $table . "." . $item['on']['with'] . ' = ' .  $item['table'] . "." . $item['on']['on'];
 
             $array[] =  'LEFT JOIN ' . implode(" ", $j);
         }
