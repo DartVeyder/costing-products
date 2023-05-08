@@ -14,7 +14,7 @@
             $router->post('/costs', 'ProductCostController@store'); 
             $router->delete('/costs/(\d+)', 'ProductCostController@delete');
             $router->get('/costs/(\d+)/edit', 'ProductCostController@edit'); 
-            
+            $router->patch('costs/(\d+)/edit/update', 'ProductCostController@update');
         });
 
         $router->mount('/types', function () use ($router) {
