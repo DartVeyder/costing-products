@@ -1,16 +1,24 @@
 {% extends "layouts/main.twig" %}
 {% block content %}
-<h3>Редагувати </h3>
+<h3>Редагувати "{{cost.name}}"</h3>
  
 
-<form action="{{path('/products/', product.id, false)}}" method="POST"  enctype="multipart/form-data" >
+<form action="{{path('/', product.id, true)}}update" method="POST"  enctype="multipart/form-data" >
 <input  type="hidden" name="PATCH" value="1">
- 
+
+  <label  class="form-label">Ціна за одиницю</label>
+  <div class="mb-3 input-group">   
+        <input type="number" class="form-control" aria-label="Ціна за одиницю"  
+    pattern='[0-9]+(\.[0-9][0-9]?)?' min= "0" step="0.01" value="{{cost.unit_cost}}"   name="costs[unit_cost]">
+    <span class="input-group-text">грн</span>
+  </div>
+
 {% for attribute in cost_attributes %}
   <label  class="form-label">{{attribute.name}}</label>
+  <input name="cost_attribute[id]" value="{{attribute.id}}"  hidden/>
   <div class="mb-3 input-group">   
         <input type="number" class="form-control" aria-label="{{attribute.name}}"  
-    pattern='[0-9]+(\.[0-9][0-9]?)?' min= "0" step="0.0001" value="{{attribute.value}}"   name="product_attributes[][value]" required>
+    pattern='[0-9]+(\.[0-9][0-9]?)?' min= "0" step="0.0001" value="{{attribute.value}}"   name="cost_attribute[value]" >
     <span class="input-group-text">{{attribute.unit}}</span>
   </div>
 {% endfor %}  

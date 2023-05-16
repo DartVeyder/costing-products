@@ -37,9 +37,10 @@ class ProductCostController
     
     $data['product_id'] = $product_id;
     $cost =  CostModel::find("id =  $data[cost_id]" , 'name, unit_cost');
-    $data['total_cost'] = $cost['unit_cost']  * $data['quantity'];
-    $data["quantity"] = $data["quantity"] . ' ' . $data_cost[1];
+    $data['total_cost'] = $cost['unit_cost']  * floatval($data['quantity']);
+    $data["quantity"] =  floatval($data["quantity"]) . ' ' . $data_cost[1];
    
+    //Helper::dd($data);
     ProductCostModel::create($data);
       
     redirect("/products/$product_id/costs/$cost_id/edit");
@@ -92,7 +93,7 @@ class ProductCostController
       $data['post']  =  $data_post;
       $data['cost_attributes'] = $cost_attributes;
       $data['cost'] = $cost;
-    Helper::dd($data);
+      redirect("/products/$product_id/costs/");
   }
 
   public function delete($product_id, $product_cost_id){ 

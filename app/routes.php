@@ -42,6 +42,7 @@
         $router->post('/', 'CostController@store');
         $router->delete('/(\d+)', 'CostController@delete');
         $router->get('/(\d+)/edit', 'CostController@edit');
+        $router->patch('/(\d+)/edit/update', 'CostController@update');
 
         $router->mount('/types', function () use ($router) {
             $router->get('/', 'CostTypeController@index');

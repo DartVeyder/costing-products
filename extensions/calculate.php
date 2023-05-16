@@ -49,5 +49,4 @@ class Calculate{
         ];
         return $array;
     }
-    
 }
